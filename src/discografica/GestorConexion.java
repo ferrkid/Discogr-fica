@@ -6,9 +6,14 @@
 package discografica;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -116,12 +121,12 @@ public class GestorConexion {
 
     }
 
-    public void instertarAlbum() {
+    public void instertarAlbum(String id, String titulo, String grupo, String publicacion) {
 
         Statement sta;
         try {
             sta = conn1.createStatement();
-            sta.executeUpdate("insert into album VALUE (1,'So payaso', 'Extremoduro','1999','Robe Iniesta');");
+            sta.executeUpdate("insert into album VALUE ('"+ id +"','"+ titulo +"', '"+ grupo +"','"+ publicacion +"');");
             sta.close();
             if (conn1 != null) {
                 System.out.println("Añadido a Album!");
@@ -131,6 +136,37 @@ public class GestorConexion {
             System.out.println(ex.toString());
         }
 
+    }
+    
+    
+    public ArrayList<Album> consulta_sta(){
+        
+        Statement sta;
+        
+        try {
+            sta = conn1.createStatement();
+            String query = "SELECT * FROM album;";
+            ResultSet rs = sta.executeQuery(query);
+            
+            ArrayList<Album> albumes = new ArrayList<Album>();
+            
+            while(rs.next()){
+                //Obtenemos el año en el que se publicó el disco
+                Date fechaPublicacion = rs.getDate("Publicacion");
+                Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
+                cal.setTime(fechaPublicacion);
+                int year = cal.get(Calendar.YEAR);
+                albumes.add(new Album(rs.getString("id"), rs.getString("Titulo"), rs.getString("Grupo"), year));
+            
+                       }    
+            
+            return albumes;
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+
+    
     }
 
 }

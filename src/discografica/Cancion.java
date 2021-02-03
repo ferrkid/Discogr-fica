@@ -9,18 +9,18 @@ package discografica;
  *
  * @author fptar
  */
-public class Album {
+public class Cancion {
     
+    public String nombre,grupo;
+    public int duracion,album;
     
-    public String titulo, grupo;
-    public int publicacion;
 
-    public Album(String titulo, String grupo, int publicacion) {
-        this.titulo = titulo;
+    public Cancion(String nombre, int duracion, String grupo, int album) {
+        this.nombre = nombre;
+        this.duracion = duracion;
         this.grupo = grupo;
-        this.publicacion = publicacion;
+        this.album = album;
     }
-    
     
     
 }

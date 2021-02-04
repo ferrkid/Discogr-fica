@@ -27,7 +27,7 @@ public class VistaUsuario extends javax.swing.JFrame {
         
         
         if(gestor.abrirConexion()== 1){
-            jLabelInfo.setText("READY TO EDIT!!");
+            jLabelInfo.setText("AÑADE O BORRA CUALQUIER ALBUM O CANCIÓN QUE DESEES!");
         }
         else{
          jLabelInfo.setText("CONNECTION FAILED!");
@@ -86,7 +86,7 @@ public class VistaUsuario extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextFieldAlbum = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        Actualizar = new javax.swing.JButton();
         menuBorrarAlbum = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
 
@@ -115,7 +115,9 @@ public class VistaUsuario extends javax.swing.JFrame {
             }
         });
         getContentPane().add(AñadirAlbum, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 310, 190, 40));
-        getContentPane().add(jLabelInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 140, 40));
+
+        jLabelInfo.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        getContentPane().add(jLabelInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 520, 40));
         getContentPane().add(jTextFieldPublicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 250, 190, 30));
         getContentPane().add(jTextFieldTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 110, 190, 30));
         getContentPane().add(jTextFieldGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 180, 190, 30));
@@ -137,7 +139,7 @@ public class VistaUsuario extends javax.swing.JFrame {
                 menuBorrarCancionActionPerformed(evt);
             }
         });
-        getContentPane().add(menuBorrarCancion, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 500, 160, 30));
+        getContentPane().add(menuBorrarCancion, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 460, 180, 30));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -195,31 +197,32 @@ public class VistaUsuario extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel3.setText("BORRAR ALBUM");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 410, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 370, -1, -1));
         getContentPane().add(jTextFieldAlbum, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 320, 180, 30));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel12.setText("GRUPO");
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 230, -1, -1));
 
-        jButton1.setText("RESET");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Actualizar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        Actualizar.setText("Resetear");
+        Actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ActualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 560, 320, 60));
+        getContentPane().add(Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 550, 320, 60));
 
         menuBorrarAlbum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuBorrarAlbumActionPerformed(evt);
             }
         });
-        getContentPane().add(menuBorrarAlbum, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 440, 180, 30));
+        getContentPane().add(menuBorrarAlbum, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 390, 190, 30));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel4.setText("BORRAR CANCION");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 470, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 440, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -268,6 +271,10 @@ public class VistaUsuario extends javax.swing.JFrame {
     
     private void AñadirAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AñadirAlbumActionPerformed
        gestor.instertarAlbum(jTextFieldTitulo.getText(),jTextFieldGrupo.getText(),jTextFieldPublicacion.getText());
+       jTextFieldTitulo.setText("");
+       jTextFieldGrupo.setText("");
+       jTextFieldPublicacion.setText("");
+       
        createTableAlbums();
     }//GEN-LAST:event_AñadirAlbumActionPerformed
 
@@ -283,15 +290,18 @@ public class VistaUsuario extends javax.swing.JFrame {
     private void AñadirCancionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AñadirCancionActionPerformed
         gestor.instertarCancion(jTextFieldNombre.getText(),Integer.parseInt(jTextFieldDuracion.getText()),jTextField1Grupo.getText(),Integer.parseInt(jTextFieldAlbum.getText()));
         jTextFieldNombre.setText("");
+        jTextFieldDuracion.setText("");
+        jTextField1Grupo.setText("");
+        jTextFieldAlbum.setText("");
         
         createTableCanciones();
     }//GEN-LAST:event_AñadirCancionActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
         gestor.createDataBase();
         createTableAlbums();
         createTableCanciones();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_ActualizarActionPerformed
 
     private void menuBorrarAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBorrarAlbumActionPerformed
         gestor.borraAlbum(menuBorrarAlbum.getSelectedItem().toString());
@@ -338,9 +348,9 @@ public class VistaUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Actualizar;
     private javax.swing.JButton AñadirAlbum;
     private javax.swing.JButton AñadirCancion;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
